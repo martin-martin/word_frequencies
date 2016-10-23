@@ -11757,13 +11757,15 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[139]:</div>
+<div class="prompt input_prompt">In&nbsp;[91]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span>
 </pre></div>
 
 </div>
@@ -11773,20 +11775,19 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[140]:</div>
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">codecs</span>
-
-<span class="n">songtext_file</span> <span class="o">=</span> <span class="s1">&#39;Adentro.txt&#39;</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">songtext_file</span> <span class="o">=</span> <span class="s1">&#39;Adentro.txt&#39;</span>
 <span class="n">song</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
-<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">songtext_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-        <span class="c1"># removing U+2028 (unicode line separator) to avoid later matching errors</span>
-        <span class="c1"># https://stackoverflow.com/questions/2201633/replace-newlines-in-a-unicode-string</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
-        <span class="n">song</span> <span class="o">+=</span> <span class="n">line</span>
+<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">songtext_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># importing file content to a string and</span>
+    <span class="c1"># transforming all text to lowercase, because we&#39;re interested in unique words</span>
+    <span class="n">song</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="c1"># removing U+2028 (unicode line separator) to avoid later matching errors</span>
+    <span class="c1"># https://stackoverflow.com/questions/2201633/replace-newlines-in-a-unicode-string</span>
+    <span class="n">song</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">song</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
 
 <span class="c1"># looking at a section of the resulting song string</span>
 <span class="k">print</span> <span class="n">song</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1000</span><span class="p">]</span>
@@ -11802,7 +11803,7 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Se que mis rimas aveces causan disgustos, Cuando mis neuronas corren Hasta yo mismo me asusto Mis respuestas pueden ser tan agresivas, Que hasta las letras me huyen Porque tienen miedo de que las escriba No tengo rifles pa matarte Solo basta con la pista Convierto letras en ideas como un ilusionista En una linea te mato te fracturo Te lesiono y en en la siguiente te resucito Cuando te menciono Eso es parte de mi arte Que todo el mundo sepa, Que estas rimas son pa ti sin tener que mencionarte Y no lo hago para evitar el roce Lo hago para no hacerte famoso En los países donde nadie te conoce Después de ver como se mueven Las guerras y las guerrillas Tu crees que le voy a tener miedo A tu pandilla? Dispara cuando quieras raperito maleantoso Aquí no gana el mas maleante Gana el mas ingenioso En tu cabeza tu eres un narco Buscado por la policía Y tus pistolas son como los unicornios De fantasía No hay problema en que tengas Enemigos imaginarios Pero si en que los chamaquitos Crean que eres 
+<pre>se que mis rimas aveces causan disgustos, cuando mis neuronas corren hasta yo mismo me asusto mis respuestas pueden ser tan agresivas, que hasta las letras me huyen porque tienen miedo de que las escriba no tengo rifles pa matarte solo basta con la pista convierto letras en ideas como un ilusionista en una linea te mato te fracturo te lesiono y en en la siguiente te resucito cuando te menciono eso es parte de mi arte que todo el mundo sepa, que estas rimas son pa ti sin tener que mencionarte y no lo hago para evitar el roce lo hago para no hacerte famoso en los países donde nadie te conoce después de ver como se mueven las guerras y las guerrillas tu crees que le voy a tener miedo a tu pandilla? dispara cuando quieras raperito maleantoso aquí no gana el mas maleante gana el mas ingenioso en tu cabeza tu eres un narco buscado por la policía y tus pistolas son como los unicornios de fantasía no hay problema en que tengas enemigos imaginarios pero si en que los chamaquitos crean que eres 
 </pre>
 </div>
 </div>
@@ -11813,7 +11814,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[141]:</div>
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># removing special characters that are not part of words, such as ( and ) in &quot;(coro)&quot;</span>
@@ -11848,11 +11849,11 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[142]:</div>
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">song</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">r&#39;[\d(),.!?/-]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">song</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">song</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">song</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -11865,7 +11866,7 @@ lalála  coro moró  lala
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Se que mis rimas aveces causan disgustos Cuando mis neuronas corren Hasta yo mismo me asusto Mis respuestas pueden ser tan agresivas Que hasta las letras me huyen Porque tienen miedo de que las escriba No tengo rifles pa matarte Solo basta con la pista Convierto letras en ideas como un ilusionista En una linea te mato te fracturo Te lesiono y en en la siguiente te resucito Cuando te menciono Eso es parte de mi arte Que todo el mundo sepa Que estas rimas son pa ti sin tener que mencionarte Y no lo hago para evitar el roce Lo hago para no hacerte famoso En los países donde nadie te conoce Después de ver como se mueven Las guerras y las guerrillas Tu crees que le voy a tener miedo A tu pandilla Dispara cuando quieras raperito maleantoso Aquí no gana el mas maleante Gana el mas ingenioso En tu cabeza tu eres un narco Buscado por la policía Y tus pistolas son como los unicornios De fantasía No hay problema en que tengas Enemigos imaginarios Pero si en que los chamaquitos Crean que eres un s
+<pre>se que mis rimas aveces causan disgustos cuando mis neuronas corren hasta yo mismo me asusto mis res
 </pre>
 </div>
 </div>
@@ -11876,13 +11877,13 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[143]:</div>
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">all_words</span> <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-
-<span class="c1"># show a few - see the internal representation of unicode characters</span>
-<span class="n">all_words</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># getting a list containing each word as an entry (splitting the string at &#39; &#39;)</span>
+<span class="n">all_words_raw</span> <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="c1"># how many are there?</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">all_words_raw</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11893,20 +11894,11 @@ lalála  coro moró  lala
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[143]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[95]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[u&#39;Se&#39;,
- u&#39;que&#39;,
- u&#39;mis&#39;,
- u&#39;rimas&#39;,
- u&#39;aveces&#39;,
- u&#39;causan&#39;,
- u&#39;disgustos&#39;,
- u&#39;Cuando&#39;,
- u&#39;mis&#39;,
- u&#39;neuronas&#39;]</pre>
+<pre>638</pre>
 </div>
 
 </div>
@@ -11917,17 +11909,122 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[144]:</div>
+<div class="prompt input_prompt">In&nbsp;[96]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># let&#39;s look for a word that uses an unicode char</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># remove empty string entries (only whitespaces)</span>
+<span class="c1"># that come to be from removed special characters, such as &quot; - &quot; -&gt; &quot; &quot;</span>
+<span class="c1"># removes also &quot;0&quot; - but numbers are anyways removed and not of interest for vocabulary</span>
+<span class="c1"># https://stackoverflow.com/questions/3845423/remove-empty-strings-from-a-list-of-strings</span>
+<span class="n">all_words</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">all_words_raw</span><span class="p">)</span>
+<span class="c1"># how many are there now? (2 removed)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[96]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>636</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># checking whether we did the right thing here</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">all_words_raw</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_words</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s2">&quot;removed: &quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="s2">&quot; &lt;-&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>removed:    &lt;-
+removed:    &lt;-
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># show a few - see the internal representation of unicode characters</span>
+
+<span class="n">all_words</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[98]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[u&#39;se&#39;, u&#39;que&#39;, u&#39;mis&#39;, u&#39;rimas&#39;, u&#39;aveces&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">spanish_unicode_characters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">u&#39;í&#39;</span><span class="p">,</span> <span class="s1">u&#39;á&#39;</span><span class="p">,</span> <span class="s1">u&#39;é&#39;</span><span class="p">,</span> <span class="s1">u&#39;ó&#39;</span><span class="p">,</span> <span class="s1">u&#39;ú&#39;</span><span class="p">,</span> <span class="s1">u&#39;ñ&#39;</span><span class="p">,</span> <span class="s1">u&#39;ü&#39;</span><span class="p">]</span>
+<span class="c1"># according to: http://character-code.com/spanish-html-codes.php</span>
+
+<span class="c1"># get the index of one word containing a relevant unicode character</span>
+<span class="c1"># https://stackoverflow.com/questions/6531482/how-to-check-if-a-string-contains-an-element-from-a-list-in-python</span>
 <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">all_words</span><span class="p">:</span>
     <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="s1">u&#39;policía&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">u_char</span> <span class="ow">in</span> <span class="n">spanish_unicode_characters</span> <span class="k">for</span> <span class="n">u_char</span> <span class="ow">in</span> <span class="n">word</span><span class="p">):</span>
+        <span class="n">example_unicode_word</span> <span class="o">=</span> <span class="n">word</span>
         <span class="n">unicode_index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">break</span>
 
-<span class="k">print</span> <span class="n">unicode_index</span>
+<span class="c1"># https://stackoverflow.com/questions/3235386/python-using-format-on-a-unicode-escaped-string</span>
+<span class="k">print</span> <span class="s2">u&quot;The first word containing a Spanish unicode character, {}, </span><span class="se">\</span>
+<span class="s2">is found at index {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">example_unicode_word</span><span class="p">,</span> <span class="n">unicode_index</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11940,7 +12037,7 @@ lalála  coro moró  lala
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>160
+<pre>The first word containing a Spanish unicode character, países, is found at index 108
 </pre>
 </div>
 </div>
@@ -11951,11 +12048,10 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[145]:</div>
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># gotcha. now let&#39;s take a look at you</span>
-<span class="n">all_words</span><span class="p">[</span><span class="n">unicode_index</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">all_words</span><span class="p">[</span><span class="n">unicode_index</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -11966,11 +12062,11 @@ lalála  coro moró  lala
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[145]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[100]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>u&#39;polic\xeda&#39;</pre>
+<pre>u&#39;pa\xedses&#39;</pre>
 </div>
 
 </div>
@@ -11981,7 +12077,7 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[146]:</div>
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># another example that life is good!</span>
@@ -11999,7 +12095,7 @@ lalála  coro moró  lala
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>policía
+<pre>países
 </pre>
 </div>
 </div>
@@ -12010,7 +12106,7 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[147]:</div>
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># now I need to count how often do words appear in the song text</span>
@@ -12026,7 +12122,10 @@ lalála  coro moró  lala
             <span class="n">word_frequencies_in_text</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">word_frequencies_in_text</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 
-<span class="n">pprint</span><span class="p">(</span><span class="n">word_frequencies_in_text</span><span class="p">)</span>
+<span class="c1"># looking at a few of the frequency dict entries</span>
+<span class="c1"># https://stackoverflow.com/questions/7971618/python-return-first-n-keyvalue-pairs-from-dict</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">pprint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">word_frequencies_in_text</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">n</span><span class="p">)))</span>
 </pre></div>
 
 </div>
@@ -12039,337 +12138,11 @@ lalála  coro moró  lala
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{u&#39;a&#39;: 14,
- u&#39;acertijos&#39;: 1,
- u&#39;ac\xe1&#39;: 1,
- u&#39;adentro&#39;: 4,
- u&#39;africana&#39;: 1,
- u&#39;agresivas&#39;: 1,
- u&#39;ahora&#39;: 1,
- u&#39;ahorque&#39;: 1,
- u&#39;ak&#39;: 1,
- u&#39;al&#39;: 2,
- u&#39;alg\xfan&#39;: 1,
- u&#39;all\xe1&#39;: 1,
- u&#39;amigo&#39;: 1,
- u&#39;andar&#39;: 1,
- u&#39;antes&#39;: 1,
- u&#39;aqu\xed&#39;: 1,
- u&#39;arrepent\xed&#39;: 1,
- u&#39;arte&#39;: 2,
- u&#39;asusto&#39;: 1,
- u&#39;aunque&#39;: 3,
- u&#39;aveces&#39;: 1,
- u&#39;aviones&#39;: 1,
- u&#39;a\xf1os&#39;: 1,
- u&#39;baseball&#39;: 1,
- u&#39;basta&#39;: 1,
- u&#39;bien&#39;: 1,
- u&#39;bolar&#39;: 1,
- u&#39;bombazos&#39;: 1,
- u&#39;borren&#39;: 1,
- u&#39;boxeadores&#39;: 1,
- u&#39;brazos&#39;: 1,
- u&#39;brillante&#39;: 1,
- u&#39;bruto&#39;: 1,
- u&#39;buen&#39;: 1,
- u&#39;burlarme&#39;: 1,
- u&#39;buscado&#39;: 1,
- u&#39;caballero&#39;: 1,
- u&#39;cabeza&#39;: 2,
- u&#39;cabr\xf3n&#39;: 1,
- u&#39;cadenita&#39;: 1,
- u&#39;caf\xe9&#39;: 1,
- u&#39;calvos&#39;: 1,
- u&#39;cantando&#39;: 1,
- u&#39;cara&#39;: 1,
- u&#39;carajos&#39;: 1,
- u&#39;carrera&#39;: 1,
- u&#39;caso&#39;: 1,
- u&#39;causan&#39;: 1,
- u&#39;central&#39;: 1,
- u&#39;chamaquitos&#39;: 2,
- u&#39;cien&#39;: 2,
- u&#39;cinco&#39;: 1,
- u&#39;color&#39;: 1,
- u&#39;comida&#39;: 1,
- u&#39;como&#39;: 6,
- u&#39;compre&#39;: 1,
- u&#39;comunista&#39;: 1,
- u&#39;con&#39;: 5,
- u&#39;congo&#39;: 1,
- u&#39;conoce&#39;: 1,
- u&#39;convierto&#39;: 1,
- u&#39;coro&#39;: 2,
- u&#39;corren&#39;: 1,
- u&#39;corta&#39;: 1,
- u&#39;crean&#39;: 1,
- u&#39;crees&#39;: 1,
- u&#39;cristianas&#39;: 1,
- u&#39;criticas&#39;: 1,
- u&#39;cr\xe9dito&#39;: 1,
- u&#39;cuando&#39;: 5,
- u&#39;cuarenta&#39;: 1,
- u&#39;cuartel&#39;: 1,
- u&#39;cucarachas&#39;: 1,
- u&#39;de&#39;: 21,
- u&#39;dejaron&#39;: 1,
- u&#39;deje&#39;: 1,
- u&#39;dejo&#39;: 1,
- u&#39;del&#39;: 1,
- u&#39;delicadeza&#39;: 1,
- u&#39;dentro&#39;: 1,
- u&#39;derecha&#39;: 1,
- u&#39;derriten&#39;: 1,
- u&#39;desempe\xf1o&#39;: 1,
- u&#39;desigualdades&#39;: 1,
- u&#39;desorden&#39;: 1,
- u&#39;despu\xe9s&#39;: 2,
- u&#39;diez&#39;: 1,
- u&#39;diferente&#39;: 1,
- u&#39;dificultad&#39;: 1,
- u&#39;diga&#39;: 1,
- u&#39;dije&#39;: 2,
- u&#39;dinero&#39;: 1,
- u&#39;disco&#39;: 1,
- u&#39;discos&#39;: 1,
- u&#39;disgustos&#39;: 1,
- u&#39;dispara&#39;: 1,
- u&#39;donde&#39;: 2,
- u&#39;duelen&#39;: 1,
- u&#39;d\xeda&#39;: 1,
- u&#39;educaci\xf3n&#39;: 1,
- u&#39;el&#39;: 12,
- u&#39;en&#39;: 19,
- u&#39;enemigos&#39;: 1,
- u&#39;entender&#39;: 1,
- u&#39;eres&#39;: 3,
- u&#39;es&#39;: 5,
- u&#39;escriba&#39;: 1,
- u&#39;escribir&#39;: 1,
- u&#39;escuela&#39;: 1,
- u&#39;ese&#39;: 1,
- u&#39;eso&#39;: 2,
- u&#39;esta&#39;: 1,
- u&#39;estar\xedan&#39;: 1,
- u&#39;estas&#39;: 1,
- u&#39;esto&#39;: 1,
- u&#39;estoy&#39;: 1,
- u&#39;estudiante&#39;: 1,
- u&#39;evitar&#39;: 1,
- u&#39;excursi\xf3n&#39;: 1,
- u&#39;exploten&#39;: 1,
- u&#39;falto&#39;: 2,
- u&#39;familia&#39;: 1,
- u&#39;famoso&#39;: 1,
- u&#39;fantas\xeda&#39;: 1,
- u&#39;fobia&#39;: 1,
- u&#39;forma&#39;: 1,
- u&#39;fracturo&#39;: 1,
- u&#39;frente&#39;: 1,
- u&#39;fucking&#39;: 1,
- u&#39;fui&#39;: 1,
- u&#39;funciona&#39;: 1,
- u&#39;gana&#39;: 2,
- u&#39;gente&#39;: 1,
- u&#39;gobernador&#39;: 1,
- u&#39;gorrita&#39;: 1,
- u&#39;graduados&#39;: 1,
- u&#39;guerra&#39;: 1,
- u&#39;guerras&#39;: 1,
- u&#39;guerrillas&#39;: 1,
- u&#39;gusta&#39;: 1,
- u&#39;hace&#39;: 1,
- u&#39;hacer&#39;: 2,
- u&#39;hacerte&#39;: 1,
- u&#39;hago&#39;: 2,
- u&#39;has&#39;: 1,
- u&#39;hasta&#39;: 3,
- u&#39;hay&#39;: 1,
- u&#39;he&#39;: 1,
- u&#39;hermano&#39;: 1,
- u&#39;hijo&#39;: 1,
- u&#39;hijoeputa&#39;: 1,
- u&#39;honestidad&#39;: 1,
- u&#39;honesto&#39;: 1,
- u&#39;hoy&#39;: 1,
- u&#39;hubiese&#39;: 1,
- u&#39;huyen&#39;: 1,
- u&#39;ideas&#39;: 1,
- u&#39;ilusionista&#39;: 1,
- u&#39;imaginarios&#39;: 1,
- u&#39;importan&#39;: 1,
- u&#39;incitar&#39;: 1,
- u&#39;ingenioso&#39;: 1,
- u&#39;intento&#39;: 1,
- u&#39;interior&#39;: 1,
- u&#39;invierto&#39;: 1,
- u&#39;izquierda&#39;: 1,
- u&#39;jodido&#39;: 1,
- u&#39;la&#39;: 20,
- u&#39;lagartijas&#39;: 1,
- u&#39;las&#39;: 9,
- u&#39;le&#39;: 6,
- u&#39;lento&#39;: 1,
- u&#39;lesiono&#39;: 1,
- u&#39;letras&#39;: 2,
- u&#39;ley&#39;: 1,
- u&#39;limpien&#39;: 1,
- u&#39;linea&#39;: 1,
- u&#39;llaman&#39;: 1,
- u&#39;llevo&#39;: 2,
- u&#39;lo&#39;: 6,
- u&#39;los&#39;: 9,
- u&#39;lucho&#39;: 1,
- u&#39;luego&#39;: 1,
- u&#39;l\xedricas&#39;: 1,
- u&#39;mae&#39;: 1,
- u&#39;magogo&#39;: 1,
- u&#39;mal&#39;: 1,
- u&#39;maleante&#39;: 2,
- u&#39;maleantoso&#39;: 1,
- u&#39;manejo&#39;: 1,
- u&#39;marineros&#39;: 1,
- u&#39;mas&#39;: 3,
- u&#39;maserati&#39;: 1,
- u&#39;matan&#39;: 1,
- u&#39;mataron&#39;: 1,
- u&#39;matarte&#39;: 1,
- u&#39;mato&#39;: 1,
- u&#39;me&#39;: 14,
- u&#39;mejor&#39;: 2,
- u&#39;mejores&#39;: 1,
- u&#39;mencionarte&#39;: 1,
- u&#39;menciono&#39;: 1,
- u&#39;menos&#39;: 1,
- u&#39;mensualidad&#39;: 1,
- u&#39;merec\xeda&#39;: 1,
- u&#39;mi&#39;: 7,
- u&#39;miedo&#39;: 3,
- u&#39;mirarme&#39;: 1,
- u&#39;mis&#39;: 3,
- u&#39;mismo&#39;: 1,
- u&#39;momento&#39;: 1,
- u&#39;mucho&#39;: 2,
- u&#39;mueven&#39;: 1,
- u&#39;mundo&#39;: 1,
- u&#39;nadie&#39;: 1,
- u&#39;narco&#39;: 1,
- u&#39;neuronas&#39;: 1,
- u&#39;ni&#39;: 1,
- u&#39;no&#39;: 16,
- u&#39;nunca&#39;: 1,
- u&#39;o&#39;: 3,
- u&#39;odia&#39;: 1,
- u&#39;oportunidades&#39;: 1,
- u&#39;orden&#39;: 1,
- u&#39;otra&#39;: 1,
- u&#39;pa&#39;: 6,
- u&#39;pagar&#39;: 1,
- u&#39;pandilla&#39;: 1,
- u&#39;papel&#39;: 1,
- u&#39;par&#39;: 1,
- u&#39;para&#39;: 3,
- u&#39;parte&#39;: 1,
- u&#39;pa\xeds&#39;: 1,
- u&#39;pa\xedses&#39;: 1,
- u&#39;pelo&#39;: 1,
- u&#39;pero&#39;: 2,
- u&#39;personas&#39;: 1,
- u&#39;peso&#39;: 1,
- u&#39;pie&#39;: 1,
- u&#39;pillen&#39;: 1,
- u&#39;pista&#39;: 1,
- u&#39;pistolas&#39;: 1,
- u&#39;poco&#39;: 1,
- u&#39;polic\xeda&#39;: 1,
- u&#39;pol\xedtica&#39;: 1,
- u&#39;por&#39;: 7,
- u&#39;porque&#39;: 3,
- u&#39;prefiero&#39;: 1,
- u&#39;primero&#39;: 1,
- u&#39;problema&#39;: 1,
- u&#39;pueden&#39;: 1,
- u&#39;puedes&#39;: 2,
- u&#39;puerto&#39;: 1,
- u&#39;que&#39;: 17,
- u&#39;quedando&#39;: 1,
- u&#39;quieras&#39;: 1,
- u&#39;quieres&#39;: 1,
- u&#39;radio&#39;: 1,
- u&#39;rapeando&#39;: 2,
- u&#39;raperito&#39;: 1,
- u&#39;rapero&#39;: 1,
- u&#39;respuestas&#39;: 1,
- u&#39;resucito&#39;: 1,
- u&#39;revoluci\xf3n&#39;: 1,
- u&#39;rico&#39;: 2,
- u&#39;rifles&#39;: 1,
- u&#39;rimando&#39;: 1,
- u&#39;rimas&#39;: 2,
- u&#39;robarte&#39;: 1,
- u&#39;roce&#39;: 1,
- u&#39;ropita&#39;: 1,
- u&#39;sacado&#39;: 1,
- u&#39;sales&#39;: 1,
- u&#39;santo&#39;: 1,
- u&#39;se&#39;: 4,
- u&#39;seguir&#39;: 1,
- u&#39;sepa&#39;: 1,
- u&#39;ser&#39;: 1,
- u&#39;sesos&#39;: 1,
- u&#39;sexualmente&#39;: 1,
- u&#39;si&#39;: 3,
- u&#39;sicario&#39;: 1,
- u&#39;siendo&#39;: 1,
- u&#39;sientas&#39;: 1,
- u&#39;siguiente&#39;: 1,
- u&#39;sin&#39;: 4,
- u&#39;siria&#39;: 1,
- u&#39;sobre&#39;: 1,
- u&#39;sol&#39;: 1,
- u&#39;solo&#39;: 2,
- u&#39;son&#39;: 2,
- u&#39;soy&#39;: 6,
- u&#39;suelo&#39;: 1,
- u&#39;suenan&#39;: 1,
- u&#39;tambi\xe9n&#39;: 1,
- u&#39;tan&#39;: 1,
- u&#39;te&#39;: 13,
- u&#39;tener&#39;: 2,
- u&#39;tengas&#39;: 1,
- u&#39;tengo&#39;: 5,
- u&#39;tenido&#39;: 1,
- u&#39;ti&#39;: 2,
- u&#39;tienen&#39;: 1,
- u&#39;tiran\xeda&#39;: 1,
- u&#39;tirar&#39;: 1,
- u&#39;tirarme&#39;: 1,
- u&#39;todav\xeda&#39;: 1,
- u&#39;todo&#39;: 2,
- u&#39;transparente&#39;: 1,
- u&#39;tratar&#39;: 1,
- u&#39;tu&#39;: 13,
- u&#39;tus&#39;: 2,
- u&#39;ultra&#39;: 2,
- u&#39;un&#39;: 10,
- u&#39;una&#39;: 2,
- u&#39;unicornios&#39;: 1,
- u&#39;universidades&#39;: 1,
- u&#39;unos&#39;: 1,
- u&#39;usado&#39;: 1,
- u&#39;va&#39;: 1,
- u&#39;vas&#39;: 1,
- u&#39;veas&#39;: 1,
- u&#39;venden&#39;: 1,
- u&#39;ver&#39;: 2,
- u&#39;vida&#39;: 1,
- u&#39;violenta&#39;: 1,
- u&#39;vivido&#39;: 1,
- u&#39;voy&#39;: 1,
- u&#39;y&#39;: 15,
- u&#39;ya&#39;: 2,
- u&#39;yo&#39;: 2}
+<pre>[(u&#39;tratar&#39;, 1),
+ (u&#39;estudiante&#39;, 1),
+ (u&#39;rifles&#39;, 1),
+ (u&#39;duelen&#39;, 1),
+ (u&#39;bien&#39;, 1)]
 </pre>
 </div>
 </div>
@@ -12380,16 +12153,29 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[148]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># just how to access both the keys and values of this dict:</span>
-
-<span class="c1">#for word, frequency in word_frequencies_in_text.iteritems():</span>
-    <span class="c1">#print word, &quot;|&quot;, frequency</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># getting a list of the unique words in the songtext</span>
+<span class="n">unique_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;There are {} unique words in the song&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_words</span><span class="p">))</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>There are 331 unique words in the song
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12399,7 +12185,7 @@ lalála  coro moró  lala
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Okay, so this gives us a frequency calculation for the words in one specific song text. Next step is to see how they relate to the most frequent words in Spanish.</p>
+<p>Okay, so this gives us a frequency calculation for the words in one specific song text, and a short overview of the song's content. Next step is to see how they relate to the most frequent words in Spanish.</p>
 <hr>
 
 </div>
@@ -12416,7 +12202,7 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[149]:</div>
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># importing the frequency list as a pandas dataframe</span>
@@ -12433,7 +12219,7 @@ lalála  coro moró  lala
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[149]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[104]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12484,7 +12270,7 @@ lalála  coro moró  lala
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># checking whether we&#39;re dealing with unicode strings</span>
@@ -12500,7 +12286,7 @@ lalála  coro moró  lala
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[150]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[105]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12517,7 +12303,7 @@ Name: 36, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[151]:</div>
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># this list is very long</span>
@@ -12545,10 +12331,10 @@ Name: 36, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[152]:</div>
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_5000</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5000</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_5000</span> <span class="o">=</span> <span class="n">es_word_frequencies</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5000</span><span class="p">]</span>
 <span class="k">print</span> <span class="s2">&quot;A new df with only the top {} most frequent Spanish words.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">top_5000</span><span class="p">))</span>
 <span class="n">top_5000</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -12568,7 +12354,7 @@ Name: 36, dtype: object</pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[152]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[109]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12619,7 +12405,7 @@ Name: 36, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[153]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># adding a third column that will serve as a checkpoint whether the word is</span>
@@ -12638,7 +12424,7 @@ Name: 36, dtype: object</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[153]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[110]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12695,7 +12481,7 @@ Name: 36, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[154]:</div>
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># now for the nitty-gritty.</span>
@@ -12725,6 +12511,18 @@ Name: 36, dtype: object</pre>
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Applications/anaconda/lib/python2.7/site-packages/pandas/core/ops.py:648: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
+  result = lib.scalar_compare(x, y, op)
+/Applications/anaconda/lib/python2.7/site-packages/ipykernel/__main__.py:10: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+</pre>
+</div>
+</div>
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
@@ -12855,27 +12653,17 @@ lagartijas &lt;---- is not in frequency list
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/Applications/anaconda/lib/python2.7/site-packages/ipykernel/__main__.py:10: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame
-
-See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[155]:</div>
+<div class="prompt input_prompt">In&nbsp;[112]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># checking the edited df</span>
-<span class="n">top_5000</span>
+<span class="n">top_5000</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12886,7 +12674,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[155]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[112]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12930,312 +12718,48 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
       <td>2288023</td>
       <td>True</td>
     </tr>
-    <tr>
-      <th>5</th>
-      <td>el</td>
-      <td>1922428</td>
-      <td>True</td>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># while the most frequent words seem to be included, the least frequent are not</span>
+<span class="n">top_5000</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[113]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>frequency</th>
+      <th>in_lyrics</th>
     </tr>
-    <tr>
-      <th>6</th>
-      <td>y</td>
-      <td>1774259</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>es</td>
-      <td>1729448</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>en</td>
-      <td>1640089</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>lo</td>
-      <td>1429314</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>un</td>
-      <td>1407147</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>por</td>
-      <td>1107607</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>qué</td>
-      <td>1096519</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>me</td>
-      <td>1061158</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>una</td>
-      <td>928032</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>te</td>
-      <td>834775</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>se</td>
-      <td>808739</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>los</td>
-      <td>802520</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>con</td>
-      <td>736292</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>para</td>
-      <td>680713</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>mi</td>
-      <td>605768</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>está</td>
-      <td>597496</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>si</td>
-      <td>587775</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>sí</td>
-      <td>568692</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>pero</td>
-      <td>568154</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>las</td>
-      <td>515330</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>bien</td>
-      <td>514723</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>yo</td>
-      <td>508891</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>su</td>
-      <td>484229</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>eso</td>
-      <td>472776</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>4970</th>
-      <td>fuga</td>
-      <td>1429</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4971</th>
-      <td>hicieras</td>
-      <td>1429</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4972</th>
-      <td>cálmese</td>
-      <td>1429</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4973</th>
-      <td>generalmente</td>
-      <td>1428</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4974</th>
-      <td>inconsciente</td>
-      <td>1428</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4975</th>
-      <td>metí</td>
-      <td>1428</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4976</th>
-      <td>usarlo</td>
-      <td>1427</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4977</th>
-      <td>li</td>
-      <td>1427</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4978</th>
-      <td>toco</td>
-      <td>1427</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4979</th>
-      <td>grabación</td>
-      <td>1427</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4980</th>
-      <td>gane</td>
-      <td>1426</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4981</th>
-      <td>caen</td>
-      <td>1426</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4982</th>
-      <td>jess</td>
-      <td>1426</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4983</th>
-      <td>pacífico</td>
-      <td>1425</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4984</th>
-      <td>horario</td>
-      <td>1425</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4985</th>
-      <td>complejo</td>
-      <td>1425</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4986</th>
-      <td>maletín</td>
-      <td>1424</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4987</th>
-      <td>poderosa</td>
-      <td>1423</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4988</th>
-      <td>anderson</td>
-      <td>1423</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4989</th>
-      <td>conocida</td>
-      <td>1423</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4990</th>
-      <td>acabaron</td>
-      <td>1422</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4991</th>
-      <td>profesionales</td>
-      <td>1422</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4992</th>
-      <td>mitch</td>
-      <td>1422</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4993</th>
-      <td>teddy</td>
-      <td>1422</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4994</th>
-      <td>materia</td>
-      <td>1421</td>
-      <td>False</td>
-    </tr>
+  </thead>
+  <tbody>
     <tr>
       <th>4995</th>
       <td>regresará</td>
@@ -13268,7 +12792,6 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
     </tr>
   </tbody>
 </table>
-<p>5000 rows × 3 columns</p>
 </div>
 </div>
 
@@ -13280,12 +12803,13 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[156]:</div>
+<div class="prompt input_prompt">In&nbsp;[114]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># and here are the results for this songtext:</span>
 <span class="n">words_served_by_song</span> <span class="o">=</span> <span class="n">top_5000</span><span class="p">[</span><span class="n">top_5000</span><span class="o">.</span><span class="n">in_lyrics</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
-<span class="k">print</span> <span class="s2">&quot;The lyrics of {} include {} of the 5000 most common Spanish words.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">songtext_file</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">words_served_by_song</span><span class="p">))</span>
+<span class="k">print</span> <span class="s2">&quot;The lyrics of {} consists of {} unique words that include {} of </span><span class="se">\</span>
+<span class="s2">the 5000 most common Spanish words.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">songtext_file</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_words</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">words_served_by_song</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -13298,7 +12822,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>The lyrics of Adentro.txt include 208 of the 5000 most common Spanish words.
+<pre>The lyrics of Adentro.txt consists of 331 unique words that include 208 of the 5000 most common Spanish words.
 </pre>
 </div>
 </div>
